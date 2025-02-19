@@ -62,6 +62,7 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
             <p class="inscription">Pas encore inscrit ? <a href="#">Inscris-toi maintenant !</a></p>
         </div>
     </form>
+    
 
     <?php require "footer.php"; ?>
 </body>

@@ -34,7 +34,7 @@
                         <a href="profil.php" <?= activeClass("profil", $nav ?? "") ?>>Profil</a>
                     </li>
                     <li>
-                        <a href="logout.php" <?= activeClass("logout", $nav ?? "") ?>>Logout</a>
+                        <a href="logout.php" <?= activeClass("logout", $nav ?? "") ?>>Déconnexion</a>
                     </li>
                 <?php else: ?>
                     <li>
