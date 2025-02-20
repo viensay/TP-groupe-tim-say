@@ -48,6 +48,6 @@ nav{
     list-style-type: none;
     text-align: center;
 }
-.nav__links:hover{
+.btn1:hover{
     color: #007bff;
 }

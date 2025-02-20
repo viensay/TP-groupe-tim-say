@@ -55,7 +55,7 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
         </div>
 
         <div class="form__submit">
-            <input class="btn" type="submit" value="Se connecter">
+            <input class="btn" type="submit" value="Connexion">
         </div>
 
         <div class="form__inscription">
