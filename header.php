@@ -45,6 +45,6 @@
 
         </nav>
     </header>
-</body>
-
-</html>
+<?php
+require 'connectDB.php';
+?>

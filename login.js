@@ -1,4 +1,3 @@
-
 function changeForm(toShow) {
     const inscription = document.getElementById('inscription');
     const connection = document.getElementById('connection');

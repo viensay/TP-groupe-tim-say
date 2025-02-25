@@ -5,6 +5,28 @@ $nav = "login";
 $erreur = null;
 require "header.php";
 
+//Enregistrer un utilisateur dans la base de données
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $stmtAddUser = 'INSERT INTO users(user_name,user_firstname,user_nickname,user_password,user_date_of_birth,id_city) 
+    VALUES (:name, :firstname, :nickname, :password, :dob, :city)';
+    $addUser = $pdo->prepare($stmtAddUser);
+
+    $stmtIdCity = 'SELECT id_city FROM cities WHERE city_name = :city';
+    $idcity = $pdo->prepare($stmtIdCity);
+    $idcity->execute(['city' => $_POST['ville']]);
+    $city = $idcity->fetchAll();
+
+    $addUser->execute([
+        'name' => $_POST['name'],
+        'firstname' => $_POST['firstname'],
+        'nickname' => $_POST['pseudo'], 
+        'password' => password_hash($_POST['password'],PASSWORD_DEFAULT),
+        'dob' => $_POST['dob'],
+        'city' => $city[0]['id_city']
+    ]);
+}
+
+
 if (!empty($_POST['pseudo']) && !empty($_POST['password'])) {
     if ($_POST['pseudo'] === "titi" && $_POST['password'] === "0000") {
         $_SESSION['connected'] = true;
@@ -75,12 +97,29 @@ if (isset($_SESSION['connected']) && $_SESSION['connected']) {
         <?php endif; ?>
 
         <div class="form__input">
-            <input class="input" type="text" name="pseudo" placeholder="Pseudo" required><br>
-            <input class="input" type="text" name="name" placeholder="Nom" required><br>
-            <input class="input" type="text" name="firstname" placeholder="Prénom" required><br>
-            <input class="input" type="number" name="age" placeholder="Age" required><br>
+            <input class="input" type="text" name="pseudo" placeholder="Pseudo" required>
+            <input class="input" type="text" name="name" placeholder="Nom" required>
+            <input class="input" type="text" name="firstname" placeholder="Prénom" required>
+            <label for="">Date de naissance : </label>
+            <input type="date" name="dob" id="dob">
             <input class="input" type="password" name="password" placeholder="Mot de passe" required>
-            <input class="input" type="password" name="password" placeholder="Confirmer mot de passe" required>
+            <label for="ville">Votre ville : </label>
+            <select name="ville" id="ville">
+            <?php
+                $stmtCities = 'SELECT city_name FROM cities' ;
+                $cities = $pdo->prepare($stmtCities);
+                $cities->execute();
+                $listCities = $cities->fetchAll();
+                
+
+                for($i = 0 ; $i < sizeof($listCities); $i++){
+                    ?><option value="<?php echo $listCities[$i]['city_name'] ?>"><?php
+                    echo $listCities[$i]['city_name'];
+                    ?></option><?php
+                };
+                
+            ?>
+            </select>
         </div>
 
         <div class="form__info">
